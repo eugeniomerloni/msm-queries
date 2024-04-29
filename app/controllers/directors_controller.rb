@@ -12,4 +12,24 @@ class DirectorsController < ApplicationController
 
     render({:template => "director_templates/details"})
   end
+
+  def junior
+    date = Director.maximum(:dob)
+
+    matching_records = Director.where({ :dob => date})
+
+    @the_youngest = matching_records.at(0)
+
+    render({:template => "director_templates/youngest"})
+  end
+
+  def senior
+    date = Director.minimum(:dob)
+
+    matching_records = Director.where({ :dob => date})
+
+    @the_eldest = matching_records.at(0)
+
+    render({:template => "director_templates/eldest"})
+  end
 end
